@@ -34,7 +34,7 @@ interface Props {
 }
 
 const App: React.FC = (props: Props) => {
-  const [events, setEvents] = useState<any>([]);
+  const [events, setEvents] = useState<unknown>([]);
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
 
