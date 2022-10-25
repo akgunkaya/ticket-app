@@ -7,7 +7,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import Button from "@mui/material/Button";
 
-type Props = {
+type DateTimePickerFormProps = {
   startTime: Dayjs | null;
   setStartTime: (val: Dayjs | null) => void;
   endTime: Dayjs | null;
@@ -19,7 +19,7 @@ type Props = {
   handleSubmit: (event: { preventDefault: () => void }) => void;
 };
 
-const DateTimePickerEx: React.FC<Props> = ({
+export function DateTimePickerForm({
   startTime,
   setStartTime,
   endTime,
@@ -29,7 +29,7 @@ const DateTimePickerEx: React.FC<Props> = ({
   title,
   setTitle,
   handleSubmit,
-}) => {
+}: DateTimePickerFormProps) {
   const handleChangeStartTime = (newValue: Dayjs | null) => {
     setStartTime(newValue);
   };
@@ -87,6 +87,4 @@ const DateTimePickerEx: React.FC<Props> = ({
       </form>
     </LocalizationProvider>
   );
-};
-
-export default DateTimePickerEx;
+}

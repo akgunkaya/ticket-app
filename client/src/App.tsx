@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react";
-import CreateEvent from "./components/CreateEvent/CreateEvent";
-import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -18,35 +16,28 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route, NavLink } from "react-router-dom";
 import Link from "@mui/material/Link";
-import Dashboard from "./components/Dashboard/Dashboard";
-import Analytics from "./components/Analytics/Analytics";
+import { EventProps } from "./common/types";
+import { Analytics } from "./Pages/Analytics";
+import { CreateEvent } from "./Pages/CreateEvent";
+import { Dashboard } from "./components/Dashboard";
 
 const drawerWidth = 240;
 
-interface Props {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
-  window?: () => Window;
-}
-
-const App: React.FC = (props: Props) => {
-  const [events, setEvents] = useState<unknown>([]);
-  const { window } = props;
+export default function App() {
+  const [events, setEvents] = useState<EventProps[]>([]);
   const [mobileOpen, setMobileOpen] = useState(false);
-
-  const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
 
   useEffect(() => {
     fetch("/event")
       .then((res) => res.json())
       .then((data) => setEvents(data));
   }, []);
+
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
 
   const menuItems = [
     {
@@ -69,7 +60,12 @@ const App: React.FC = (props: Props) => {
       <Divider />
       <List>
         {menuItems.map((item, index) => (
-          <Link key={item.name} href={item.route} color="inherit">
+          <Link
+            key={item.name}
+            to={item.route}
+            component={NavLink}
+            color="inherit"
+          >
             <ListItem key={item.name} disablePadding>
               <ListItemButton>
                 <ListItemIcon>
@@ -84,9 +80,6 @@ const App: React.FC = (props: Props) => {
       <Divider />
     </div>
   );
-
-  const container =
-    window !== undefined ? () => window().document.body : undefined;
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -120,7 +113,6 @@ const App: React.FC = (props: Props) => {
       >
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Drawer
-          container={container}
           variant="temporary"
           open={mobileOpen}
           onClose={handleDrawerToggle}
@@ -162,21 +154,17 @@ const App: React.FC = (props: Props) => {
         <Toolbar />
         <Box>
           <Paper elevation={1}>
-            <BrowserRouter>
-              <Routes>
-                <Route path="/" element={<Dashboard events={events} />}></Route>
-                <Route path="/create" element={<CreateEvent />} />
-                <Route
-                  path="/analytics"
-                  element={<Analytics events={events} />}
-                />
-              </Routes>
-            </BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Dashboard events={events} />}></Route>
+              <Route path="/create" element={<CreateEvent />} />
+              <Route
+                path="/analytics"
+                element={<Analytics events={events} />}
+              />
+            </Routes>
           </Paper>
         </Box>
       </Box>
     </Box>
   );
-};
-
-export default App;
+}

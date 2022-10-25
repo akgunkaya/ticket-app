@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import dayjs, { Dayjs } from "dayjs";
-import Form from "./DateTimePickerEx";
-import SnackbarModule from "./SnackbarModule";
+import { SnackbarModule } from "../components/SnackbarModule";
+import { DateTimePickerForm } from "../components/DateTimePickerForm";
 
-const CreateEvent: React.FC = () => {
+export function CreateEvent() {
   const [startTime, setStartTime] = useState<Dayjs | null>(dayjs());
   const [endTime, setEndTime] = useState<Dayjs | null>(dayjs());
   const [location, setLocation] = useState<string>("");
@@ -36,7 +36,7 @@ const CreateEvent: React.FC = () => {
   }, [response]);
   return (
     <>
-      <Form
+      <DateTimePickerForm
         startTime={startTime}
         setStartTime={setStartTime}
         endTime={endTime}
@@ -50,6 +50,4 @@ const CreateEvent: React.FC = () => {
       <SnackbarModule open={open} setOpen={setOpen} />
     </>
   );
-};
-
-export default CreateEvent;
+}

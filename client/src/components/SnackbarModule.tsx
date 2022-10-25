@@ -9,30 +9,28 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-type Props = {
+type SnackbarModuleProps = {
   open: boolean;
   setOpen: (val: boolean) => void;
 };
 
-const SnackbarModule: React.FC<Props> = ({ open, setOpen }) => {
+export function SnackbarModule(props: SnackbarModuleProps) {
   const handleClose = (
-    event?: React.SyntheticEvent | Event,
+    _event?: React.SyntheticEvent | Event,
     reason?: string
   ) => {
     if (reason === "clickaway") {
       return;
     }
 
-    setOpen(false);
+    props.setOpen(false);
   };
 
   return (
-    <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+    <Snackbar open={props.open} autoHideDuration={6000} onClose={handleClose}>
       <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
-        This is a success message!
+        Event entry successful
       </Alert>
     </Snackbar>
   );
-};
-
-export default SnackbarModule;
+}

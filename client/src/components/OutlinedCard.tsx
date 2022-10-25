@@ -5,10 +5,19 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import { EventProps } from "../common/types";
 
-export default function OutlinedCard(event: any) {
-  const startTimeString = new Date(event.event.start_time).toString();
-  const endTimeString = new Date(event.event.end_time).toString();
+export function OutlinedCard({
+  id,
+  title,
+  location,
+  start_time,
+  end_time,
+}: EventProps) {
+  const startDate = new Date(start_time);
+  const endDate = new Date(end_time);
+  const startDateString = startDate.toLocaleString().split(",")[0];
+  const endDateString = endDate.toLocaleString().split(",")[0];
 
   return (
     <>
@@ -21,18 +30,18 @@ export default function OutlinedCard(event: any) {
                 color="text.secondary"
                 gutterBottom
               >
-                {event.event.location}
+                {location}
               </Typography>
               <Typography variant="h5" component="div">
-                {event.event.title}
+                {title}
               </Typography>
               <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                ID {event.event.id}
+                ID {id}
               </Typography>
               <Typography variant="body2">
-                {startTimeString}
+                {`Start: ${startDateString}`}
                 <br />
-                {endTimeString}
+                {`End: ${endDateString}`}
               </Typography>
             </CardContent>
             <CardActions>

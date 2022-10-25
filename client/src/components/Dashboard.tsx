@@ -1,7 +1,8 @@
-import Card from "./Card";
+import { OutlinedCard } from "./OutlinedCard";
 import Box from "@mui/material/Box";
+import { EventArrayProps, EventProps } from "../common/types";
 
-const Dashboard = (events: any) => {
+export function Dashboard(props: EventArrayProps) {
   return (
     <>
       <Box
@@ -12,9 +13,9 @@ const Dashboard = (events: any) => {
           aligntItems: "stretch",
         }}
       >
-        {events.events && events.events.length ? (
-          events.events.map((event: any) => (
-            <Card key={event.id} event={event} />
+        {props.events.length ? (
+          props.events.map((event: EventProps) => (
+            <OutlinedCard key={event.id} {...event} />
           ))
         ) : (
           <p>No events listed</p>
@@ -22,6 +23,4 @@ const Dashboard = (events: any) => {
       </Box>
     </>
   );
-};
-
-export default Dashboard;
+}

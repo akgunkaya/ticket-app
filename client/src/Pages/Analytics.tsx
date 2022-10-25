@@ -8,6 +8,7 @@ import {
   Legend,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
+import { EventArrayProps } from "../common/types";
 
 ChartJS.register(
   CategoryScale,
@@ -31,27 +32,25 @@ export const options = {
 };
 
 const labels = [
-  "January",
-  "February",
-  "March",
-  "April",
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
   "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
 ];
 
-export default function Analytics(events: any) {
-  const eventsStartMonthArray: Array<number> = [
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-  ];
+export function Analytics(props: EventArrayProps) {
+  const eventsStartMonthArray: number[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
   const calculateAnalytics = () => {
-    events.events.map((item: { start_time: Date }) => {
+    props.events.map((item: { start_time: Date }) => {
       const startTime = new Date(item.start_time);
       const month = startTime.getMonth();
       eventsStartMonthArray.map((item, index) => {
