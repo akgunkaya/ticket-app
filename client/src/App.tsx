@@ -27,13 +27,16 @@ const drawerWidth = 240;
 
 export default function App() {
   const [events, setEvents] = useState<EventProps[]>([]);
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState<boolean>(false);
+  const [eventAdded, setEventAdded] = useState<boolean>(false);
 
   useEffect(() => {
     fetch("/event")
       .then((res) => res.json())
-      .then((data) => setEvents(data));
-  }, []);
+      .then((data) => {
+        setEvents(data);
+      });
+  }, [eventAdded]);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -156,7 +159,15 @@ export default function App() {
           <Paper elevation={1}>
             <Routes>
               <Route path="/" element={<Dashboard events={events} />}></Route>
-              <Route path="/create" element={<CreateEvent />} />
+              <Route
+                path="/create"
+                element={
+                  <CreateEvent
+                    eventAdded={eventAdded}
+                    setEventAdded={setEventAdded}
+                  />
+                }
+              />
               <Route
                 path="/analytics"
                 element={<Analytics events={events} />}

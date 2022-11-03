@@ -3,13 +3,12 @@ import dayjs, { Dayjs } from "dayjs";
 import { SnackbarModule } from "../components/SnackbarModule";
 import { DateTimePickerForm } from "../components/DateTimePickerForm";
 
-export function CreateEvent() {
+export function CreateEvent(props: any) {
   const [startTime, setStartTime] = useState<Dayjs | null>(dayjs());
   const [endTime, setEndTime] = useState<Dayjs | null>(dayjs());
   const [location, setLocation] = useState<string>("");
   const [title, setTitle] = useState<string>("");
   const [response, setResponse] = useState<any>([]);
-  const [open, setOpen] = useState<boolean>(false);
 
   const handleSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
@@ -31,9 +30,9 @@ export function CreateEvent() {
 
   useEffect(() => {
     if (response.status === 201) {
-      setOpen(true);
+      props.setEventAdded(true);
     }
-  }, [response]);
+  }, [response, props]);
   return (
     <>
       <DateTimePickerForm
@@ -47,7 +46,7 @@ export function CreateEvent() {
         setTitle={setTitle}
         handleSubmit={handleSubmit}
       />
-      <SnackbarModule open={open} setOpen={setOpen} />
+      <SnackbarModule open={props.eventAdded} setOpen={props.setEventAdded} />
     </>
   );
 }

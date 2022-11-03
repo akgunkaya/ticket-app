@@ -25,7 +25,6 @@ export function SnackbarModule(props: SnackbarModuleProps) {
 
     props.setOpen(false);
   };
-
   return (
     <Snackbar open={props.open} autoHideDuration={6000} onClose={handleClose}>
       <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
